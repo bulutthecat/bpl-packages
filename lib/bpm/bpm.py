@@ -8,19 +8,9 @@ import os
 def parse_cli_args():
     parser = argparse.ArgumentParser(description='BadOS Package Manager')
 
-    parser.add_argument(
-        'action',
-        type=str,
-        choices=['install', 'remove', 'fetchcore'],
-        help='action to perform'
-    )
-
-    parser.add_argument(
-        'packages',
-        nargs='+',
-        type=str,
-        help='packages to manage'
-    )
+    parser.add_argument('action',type=str,choices=['install', 'remove'],help='action to perform')
+    parser.add_argument('packages', nargs='+', type=str, help='packages to manage')
+    parser.add_argument('-y', '--yes', action='store_true', help='assume "yes" as the answer to all prompts and run non-interactively')
 
     return parser.parse_args()
 
@@ -36,7 +26,7 @@ class Package:
         self.id = id
         self.version = version
         self.author = author
-        self.bin_uri = f'https://raw.githubusercontent.com/badtechnologies/bdsh/main/bpl/{id}/{bin}' if bin is not None else None
+        self.bin_uri = f'https://raw.githubusercontent.com/badtechnologies/bpl/main/lib/{id}/{bin}' if bin is not None else None
         self.homepage = homepage
         self.requires = requires if requires is not None else []
 
@@ -59,7 +49,7 @@ class Package:
     @staticmethod
     def fetch(package: str):
         res = requests.get(
-            f'https://raw.githubusercontent.com/badtechnologies/bdsh/main/bpl/{package}/bpl.json')
+            f'https://raw.githubusercontent.com/badtechnologies/bpl/main/lib/{package}/bpl.json')
 
         if res.status_code == 200:
             return Package.load_json(package, json.loads(res.content))
@@ -103,10 +93,11 @@ def main():
 
         print()
 
-        while (s := input((f"Install {len(packages)} package(s): {' '.join([p.id for p in packages])}? [Y/n] ") or 'n').lower()) not in {'y', 'n'}:
-            pass
-        if s == 'n':
-            exit()
+        if not args.yes:
+            while (s := input((f"Install {len(packages)} package(s): {' '.join([p.id for p in packages])}? [Y/n] ") or 'n').lower()) not in {'y', 'n'}:
+                pass
+            if s == 'n':
+                exit()
 
         for package in packages:
             print(
@@ -126,10 +117,11 @@ def main():
                 f.write(res.content)
 
     elif args.action == 'remove':
-        while (s := input((f"Remove {len(args.packages)} package(s): {' '.join(args.packages)}? [Y/n] ") or 'n').lower()) not in {'y', 'n'}:
-            pass
-        if s == 'n':
-            exit()
+        if not args.yes:
+            while (s := input((f"Remove {len(args.packages)} package(s): {' '.join(args.packages)}? [Y/n] ") or 'n').lower()) not in {'y', 'n'}:
+                pass
+            if s == 'n':
+                exit()
 
         for package in args.packages:
             print(f"Deleting {package}")
