@@ -2,7 +2,7 @@
 	"name": "example bdsh package",
 	"version": "1.0.0",
 	"author": "Me!",
-	"bin": "main.py",
+	"bin": "example.py",
 	"homepage": "https://example.com",
 	"requires": []
 }
