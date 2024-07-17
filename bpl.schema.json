@@ -17,6 +17,9 @@
 		"homepage": {
 			"type": "string"
 		},
+		"license": {
+			"type": "string"
+		},
 		"requires": {
 			"type": "array",
 			"items": {
