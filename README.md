@@ -11,3 +11,7 @@ The files in this project are subject to their own licenses.
 ### For packages:
 
 See the license in the package's metadata file (`bpl.json`). It will be the `license` key. If there is no license specified, it will default to the MIT license.
+
+## For the BadOS Package Portal:
+
+The BadOS Package Portal is licensed under the GNU GPL-3.0 license. © 2024 Bad Technologies.
