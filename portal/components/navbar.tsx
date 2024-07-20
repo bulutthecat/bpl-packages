@@ -28,11 +28,12 @@ export const Navbar = () => (
         <Input
           aria-label="Search"
           classNames={{
-            inputWrapper: "bg-default-100 border border-default-300"
+            inputWrapper: "bg-default-100 border border-default-300",
+            input: "text-ellipsis"
           }}
           className="w-full"
           labelPlacement="outside"
-          placeholder="Search..."
+          placeholder="Search the BadOS Package Portal..."
           startContent={<MagnifyingGlass className="text-default-400" />}
           type="search" />
       </NavbarItem>

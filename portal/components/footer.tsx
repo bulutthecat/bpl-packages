@@ -1,5 +1,6 @@
 "use client"
 
+import { siteConfig } from "@/config/site";
 import { GithubLogo, XLogo } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,13 +21,13 @@ export const Footer = () => (
           <h2 className="title-font font-medium text-default-900 tracking-widest text-sm mb-3">Documentation</h2>
           <nav className="list-none mb-10 text-default-600">
             <li>
-              <Link className="hover:text-default-800 hover:underline" href="https://badtechnologies.github.io/bdsh/">BadOS Dynamic Shell (BDSH)</Link>
+              <Link className="hover:text-default-800 hover:underline" href={siteConfig.links.docs.bdsh}>BadOS Dynamic Shell (BDSH)</Link>
             </li>
             <li>
-              <Link className="hover:text-default-800 hover:underline" href="https://badtechnologies.github.io/bdsh/bpl.html">BDSH Package Library (BPL)</Link>
+              <Link className="hover:text-default-800 hover:underline" href={siteConfig.links.docs.bpl}>BDSH Package Library (BPL)</Link>
             </li>
             <li>
-              <Link className="hover:text-default-800 hover:underline" href="https://badtechnologies.github.io/bdsh/bpm.html">BadOS Package Manager (BPM)</Link>
+              <Link className="hover:text-default-800 hover:underline" href={siteConfig.links.docs.bpm}>BadOS Package Manager (BPM)</Link>
             </li>
           </nav>
         </div>
@@ -36,10 +37,10 @@ export const Footer = () => (
       <div className="container mx-auto py-4 px-5 flex flex-wrap text-default-500 text-sm">
         <p>© {new Date().getFullYear()} | Bad Technologies</p>
         <span className="inline-flex ml-auto justify-start gap-2">
-          <Link href="https://github.com/badtechnologies">
+          <Link href={siteConfig.links.github}>
             <GithubLogo size={20} />
           </Link>
-          <Link href="https://x.com/badtechnologies">
+          <Link href={siteConfig.links.x}>
             <XLogo size={20} />
           </Link>
         </span>
