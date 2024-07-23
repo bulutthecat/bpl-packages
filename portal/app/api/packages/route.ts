@@ -1,8 +1,9 @@
 import path from "path";
 import fs from "fs";
 import Fuse from "fuse.js";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   let query = new URLSearchParams(req.url.split("?")[1]).get("query");
 
   try {
@@ -14,15 +15,18 @@ export async function GET(req: Request) {
       .filter((file) => file.isDirectory())
       .map((file) => file.name);
 
-    if (!query) return Response.json(packages);
+    if (!query) return NextResponse.json(packages);
 
     const fuse = new Fuse(packages);
     const results = fuse.search(query);
 
     const matchedPackages = results.map((result) => result.item);
 
-    return Response.json(matchedPackages);
+    return NextResponse.json(matchedPackages);
   } catch {
-    return Response.json({ error: "Something went wrong" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 }
+    );
   }
 }

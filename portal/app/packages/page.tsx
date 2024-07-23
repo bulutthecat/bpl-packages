@@ -16,8 +16,7 @@ export default function Page() {
         const response = await fetch(`/api/packages${params}`);
         const data = await response.json();
         setPackages(data);
-      } catch {
-      }
+      } catch {}
     };
 
     fetchPackages();
