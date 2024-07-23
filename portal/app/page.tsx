@@ -4,8 +4,8 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@nextui-org/button";
 import { Code } from "@nextui-org/code";
 import { Input } from "@nextui-org/input";
+import { Link } from "@nextui-org/link";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -50,14 +50,14 @@ export default function Home() {
             </Button>
           </div>
 
-          <p>Or, test your luck and <span className="cursor-pointer underline font-semibold hover:text-default-800">check out a random package</span>.</p>
+          <p>Or, <Link href="/packages" color="foreground" underline="hover" className="font-semibold">browse all packages</Link>.</p>
         </div>
       </section>
 
       <section className="max-w-[64rem] mx-auto space-y-4 py-8">
         <h1 className="text-2xl font-semibold">What is the BadOS Package Portal?</h1>
         <p>The BadOS Package Portal is an online application to index and browse the BadOS Dynamic Shell Package Library (BPL). The BPL contains a library of software for BDSH, shared by first-party developers and the community.</p>
-        <p>The creation, publication, etc. of BadOS packages is documented <Link href={siteConfig.links.docs.bpl} className="underline font-semibold hover:text-default-800">here</Link>.</p>
+        <p>The creation, publication, etc. of BadOS packages is documented <Link href={siteConfig.links.docs.bpl} color="foreground" underline="always" className="font-semibold" isExternal>here</Link>.</p>
       </section>
 
       <section className="max-w-[64rem] mx-auto space-y-4 py-8">
