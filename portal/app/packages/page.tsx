@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 export default function Page() {
   let query = useSearchParams().get("q");
   let params = query ? `?query=${query}` : "";
-  console.log(params);
 
   const [packages, setPackages] = useState<[] | null>(null);
 
@@ -17,8 +16,7 @@ export default function Page() {
         const response = await fetch(`/api/packages${params}`);
         const data = await response.json();
         setPackages(data);
-      } catch (error) {
-        console.error("Error fetching packages:", error);
+      } catch {
       }
     };
 
