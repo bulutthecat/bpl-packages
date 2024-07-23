@@ -11,6 +11,7 @@ import {
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import NextLink from "next/link";
 import Image from "next/image";
+import { Search } from "./search";
 
 export const Navbar = () => (
   <NextUINavbar maxWidth="xl" position="sticky" isBordered>
@@ -25,17 +26,7 @@ export const Navbar = () => (
 
     <NavbarContent justify="center" className="w-full mx-8">
       <NavbarItem className="flex w-full">
-        <Input
-          aria-label="Search"
-          classNames={{
-            inputWrapper: "bg-default-100 border border-default-300",
-            input: "text-ellipsis"
-          }}
-          className="w-full"
-          labelPlacement="outside"
-          placeholder="Search the BadOS Package Portal..."
-          startContent={<MagnifyingGlass className="text-default-400" />}
-          type="search" />
+        <Search />
       </NavbarItem>
     </NavbarContent>
 
