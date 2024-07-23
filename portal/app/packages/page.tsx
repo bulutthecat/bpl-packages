@@ -9,7 +9,7 @@ export default function Page() {
   let params = query ? `?query=${query}` : "";
   console.log(params)
 
-  const [packages, setPackages] = useState([]);
+  const [packages, setPackages] = useState<[] | null>(null);
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -28,7 +28,7 @@ export default function Page() {
   return (
     <div className="p-5 container px-20 mx-auto">
       <h1 className='text-2xl font-semibold'>{query ? `Search results for "${query}"` : 'All packages'}</h1>
-      {packages.length > 0 ? (
+      {packages ? (
         <>
           <p className="text-default-500">{packages.length} packages found</p>
           <ul>
@@ -40,7 +40,7 @@ export default function Page() {
           </ul>
         </>
       ) : (
-        <p className="text-default-500 text-center">Loading packages...</p>
+        <p className="text-default-500">Looking for packages...</p>
       )}
     </div>
   );
