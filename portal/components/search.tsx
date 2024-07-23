@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -7,17 +7,20 @@ import React, { useState } from "react";
 
 type SearchProps = {
   isFeature?: boolean;
-}
+};
 
 export const Search: React.FC<SearchProps> = ({ isFeature }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   function search() {
     window.location.href = `/packages?q=${encodeURIComponent(value)}`;
   }
 
-  const handleKeyDown = (event: { key: string; preventDefault: () => void; }) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: {
+    key: string;
+    preventDefault: () => void;
+  }) => {
+    if (event.key === "Enter") {
       event.preventDefault();
       search();
     }
@@ -47,7 +50,7 @@ export const Search: React.FC<SearchProps> = ({ isFeature }) => {
               "group-data-[focus=true]:bg-default-200/50",
               "dark:group-data-[focus=true]:bg-default/60",
               "!cursor-text",
-            ]
+            ],
           }}
           className="max-w-[512px]"
           labelPlacement="outside"
@@ -59,21 +62,18 @@ export const Search: React.FC<SearchProps> = ({ isFeature }) => {
           onKeyDown={handleKeyDown}
         />
 
-        <Button
-          color="primary"
-          onPress={() => search()}
-        >
+        <Button color="primary" onPress={() => search()}>
           Search
         </Button>
       </div>
-    )
+    );
   } else {
     return (
       <Input
         aria-label="Search"
         classNames={{
           inputWrapper: "bg-default-100 border border-default-300",
-          input: "text-ellipsis"
+          input: "text-ellipsis",
         }}
         className="w-full"
         labelPlacement="outside"

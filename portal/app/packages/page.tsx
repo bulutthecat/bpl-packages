@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { PackageListing } from '@/components/package-listing';
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { PackageListing } from "@/components/package-listing";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 export default function Page() {
   let query = useSearchParams().get("q");
   let params = query ? `?query=${query}` : "";
-  console.log(params)
+  console.log(params);
 
   const [packages, setPackages] = useState<[] | null>(null);
 
@@ -18,7 +18,7 @@ export default function Page() {
         const data = await response.json();
         setPackages(data);
       } catch (error) {
-        console.error('Error fetching packages:', error);
+        console.error("Error fetching packages:", error);
       }
     };
 
@@ -27,7 +27,9 @@ export default function Page() {
 
   return (
     <div className="p-5 container px-20 mx-auto">
-      <h1 className='text-2xl font-semibold'>{query ? `Search results for "${query}"` : 'All packages'}</h1>
+      <h1 className="text-2xl font-semibold">
+        {query ? `Search results for "${query}"` : "All packages"}
+      </h1>
       {packages ? (
         <>
           <p className="text-default-500">{packages.length} packages found</p>

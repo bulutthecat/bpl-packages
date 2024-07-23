@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Input } from "@nextui-org/input";
@@ -6,7 +6,7 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Navbar as NextUINavbar
+  Navbar as NextUINavbar,
 } from "@nextui-org/navbar";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import NextLink from "next/link";
@@ -18,8 +18,16 @@ export const Navbar = () => (
     <NavbarContent justify="start">
       <NavbarBrand className="gap-3 w-fit">
         <NextLink className="flex justify-start items-center" href="/">
-          <Image className="min-w-8" src="/BadTech-logo-purple.svg" width={32} height={32} alt="BadTech Logo" />
-          <p className="ml-3 font-bold text-inherit text-lg hidden sm:block">Package Portal</p>
+          <Image
+            className="min-w-8"
+            src="/BadTech-logo-purple.svg"
+            width={32}
+            height={32}
+            alt="BadTech Logo"
+          />
+          <p className="ml-3 font-bold text-inherit text-lg hidden sm:block">
+            Package Portal
+          </p>
         </NextLink>
       </NavbarBrand>
     </NavbarContent>
