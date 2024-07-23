@@ -16,8 +16,9 @@ export const Footer = () => (
         <p className="mt-2 text-sm text-default-500">Powered by the BadOS Dynamic Shell Package Library (BPL).</p>
         <p className="mt-2 text-sm text-default-500">BPL contains user-uploaded content. Packages are verified by the BadTech before publishing to BPL.</p>
       </div>
+
       <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-        <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+        <div className="w-full px-4">
           <h2 className="title-font font-medium text-default-900 tracking-widest text-sm mb-3">Documentation</h2>
           <nav className="list-none mb-10 text-default-600">
             <li>
