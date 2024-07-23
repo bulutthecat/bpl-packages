@@ -17,7 +17,7 @@ export const Navbar = () => (
     <NavbarContent justify="start">
       <NavbarBrand className="gap-3 w-fit">
         <NextLink className="flex justify-start items-center" href="/">
-          <Image className="min-w-8" src="./BadTech-logo-purple.svg" width={32} height={32} alt="BadTech Logo" />
+          <Image className="min-w-8" src="/BadTech-logo-purple.svg" width={32} height={32} alt="BadTech Logo" />
           <p className="ml-3 font-bold text-inherit text-lg hidden sm:block">Package Portal</p>
         </NextLink>
       </NavbarBrand>

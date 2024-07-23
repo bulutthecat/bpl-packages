@@ -10,7 +10,7 @@ export const Footer = () => (
     <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
       <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
         <a className="flex title-font font-medium items-center md:justify-start justify-center text-default-900">
-          <Image className="min-w-8" src="./BadTech-logo-purple.svg" width={32} height={32} alt="BadTech Logo" />
+          <Image className="min-w-8" src="/BadTech-logo-purple.svg" width={32} height={32} alt="BadTech Logo" />
           <span className="ml-3 text-xl">BadOS Package Portal</span>
         </a>
         <p className="mt-2 text-sm text-default-500">Powered by the BadOS Dynamic Shell Package Library (BPL).</p>
