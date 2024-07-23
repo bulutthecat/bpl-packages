@@ -2,11 +2,8 @@
 
 import { Search } from "@/components/search";
 import { siteConfig } from "@/config/site";
-import { Button } from "@nextui-org/button";
-import { Code } from "@nextui-org/code";
-import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { Snippet } from "@nextui-org/snippet";
 
 export default function Home() {
   return (
@@ -35,11 +32,11 @@ export default function Home() {
         <p>All installations of BDSH should have the latest version of BPM. If you don't, setup the system again, or manually download it if you're up to it.</p>
         <div className="space-y-1">
           <p className="text-sm text-default-600">Install a package</p>
-          <Code>bpm install &lt;package name&gt;</Code>
+          <Snippet size="sm">bpm install &lt;package name&gt;</Snippet>
         </div>
         <div className="space-y-1">
           <p className="text-sm text-default-600">Uninstall a package</p>
-          <Code>bpm remove &lt;package name&gt;</Code>
+          <Snippet size="sm">bpm remove &lt;package name&gt;</Snippet>
         </div>
       </section>
     </div>
