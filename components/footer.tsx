@@ -7,9 +7,9 @@ import { Link } from "@nextui-org/link";
 
 export const Footer = () => (
   <footer className="text-default-600 body-font">
-    <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-      <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-        <div className="flex title-font font-medium items-center md:justify-start justify-center text-default-900">
+    <div className="container px-5 py-24 mx-auto flex sm:items-center lg:items-start sm:flex-row sm:flex-nowrap flex-wrap flex-col">
+      <div className="w-64 flex-shrink-0 sm:mx-0 mx-auto text-center sm:text-left">
+        <div className="flex title-font font-medium items-center sm:justify-start justify-center text-default-900">
           <Image
             className="min-w-8"
             src="/BadTech-logo-purple.svg"
@@ -28,7 +28,7 @@ export const Footer = () => (
         </p>
       </div>
 
-      <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
+      <div className="flex-grow flex flex-wrap sm:pl-20 -mb-10 sm:mt-0 mt-10 sm:text-left text-center">
         <div className="w-full px-4">
           <h2 className="title-font font-medium text-default-900 tracking-widest text-sm mb-3">
             Documentation

@@ -34,7 +34,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="max-w-[64rem] mx-auto space-y-4 py-8">
+      <section className="max-w-[64rem] mx-auto space-y-4 py-8 p-5">
         <h1 className="text-2xl font-semibold">
           What is the BadOS Package Portal?
         </h1>
@@ -59,7 +59,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="max-w-[64rem] mx-auto space-y-4 py-8">
+      <section className="max-w-[64rem] mx-auto space-y-4 py-8 p-5">
         <h1 className="text-2xl font-semibold">
           Package Management (installation, removal, etc.)
         </h1>

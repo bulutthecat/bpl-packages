@@ -37,6 +37,7 @@ export const Search: React.FC<SearchProps> = ({ isFeature }) => {
               "bg-transparent",
               "text-black/90 dark:text-white/90",
               "placeholder:text-default-700/60 dark:placeholder:text-white/60",
+              "text-ellipsis",
             ],
             innerWrapper: "bg-transparent",
             inputWrapper: [
@@ -72,8 +73,8 @@ export const Search: React.FC<SearchProps> = ({ isFeature }) => {
       <Input
         aria-label="Search"
         classNames={{
-          inputWrapper: "bg-default-100 border border-default-300",
-          input: "text-ellipsis",
+          inputWrapper: "bg-transparent border border-default-300",
+          input: "text-ellipsis bg-transparent",
         }}
         className="w-full"
         labelPlacement="outside"
