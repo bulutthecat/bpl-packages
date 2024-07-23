@@ -69,8 +69,8 @@ export default function Home() {
         </p>
         <p>
           All installations of BDSH should have the latest version of BPM. If
-          you don't, setup the system again, or manually download it if you're
-          up to it.
+          you don&apos;t, setup the system again, or manually download it if
+          you&apos;re up to it.
         </p>
         <div className="space-y-1">
           <p className="text-sm text-default-600">Install a package</p>
