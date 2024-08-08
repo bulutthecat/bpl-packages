@@ -1,5 +1,5 @@
 # Copywright (c) 2024 Kevin Dalli
-
+ 
 def checksum(source_string):
     sum = 0
     countTo = (len(source_string) // 2) * 2
