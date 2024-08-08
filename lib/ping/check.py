@@ -1,6 +1,7 @@
 # Copywright (c) 2024 Kevin Dalli
  
 import itertools
+import hashlib
 
 def checksum(source_string):
     sum = 0
@@ -26,7 +27,22 @@ def checksum(source_string):
 
 def xor_encrypt_decrypt(data, key):
     return bytes(a ^ b for a, b in zip(data, itertools.cycle(key.encode())))
+import hashlib
 
 def anonymize_ip(ip):
-    parts = ip.split('.')
-    return '.'.join(['x' if i % 2 == 0 else 'y' for i in range(len(parts))])
+    ip_hash = hashlib.md5(ip.encode()).hexdigest()
+    ip_hash = ip_hash[:8]
+    anonymized_ip = ''
+    for char in ip_hash:
+        if char.isdigit():
+            anonymized_ip += chr(ord('a') + int(char))
+        else:
+            anonymized_ip += chr(ord('k') + ord(char) - ord('a'))
+
+    return anonymized_ip
+
+def validip(ip):
+    # to differentiate between hostnames and IP addresses
+    # if the text has three or more dots AND it has no letters, it's an IP address
+    # if it is a valid IP, return true, if not, return false
+    return ip.count('.') >= 3 and not any(c.isalpha() for c in ip)

@@ -34,9 +34,6 @@ Advanced Error Handling:
 now this, I can do!
 
 Integration with Other Network Tools:
-
-    Traceroute Integration:
-        --auto-traceroute: Perform a traceroute if the ping fails.
     DNS Diagnostics:
         --dns-lookup: Perform DNS resolution checks and display DNS lookup times.
 

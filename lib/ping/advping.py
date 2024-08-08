@@ -6,11 +6,16 @@ import struct
 import time
 import select
 import argparse
+import sys
 
 from check import checksum, xor_encrypt_decrypt, anonymize_ip
+from traceroute import traceroute
 
 ICMP_ECHO_REQUEST = 8
-VERSION = "1.2"
+ICMP_TIME_EXCEEDED = 11
+ICMP_DEST_UNREACH = 3
+ICMP_PORT_UNREACH = 3
+VERSION = "1.3"
 
 def create_packet(id, packet_size, pattern, key=None):
     header = struct.pack('bbHHh', ICMP_ECHO_REQUEST, 0, 0, id, 1)
@@ -75,11 +80,11 @@ def receive_one_ping(sock, id, time_sent, timeout, dest_addr, key, packet_size):
         if time_left <= 0:
             return None
 
-def ping(host, count, interval, interface, ttl, packet_size, timeout, quiet, audible, timestamp, numeric, pattern, key, anonymize):
+def ping(host, count, interval, interface, ttl, packet_size, timeout, quiet, audible, timestamp, numeric, pattern, key, anonymize, auto_traceroute):
     dest = socket.gethostbyname(host)
     display_dest = anonymize_ip(dest) if anonymize else dest
     print(f'Pinging {display_dest} ({host}) > {packet_size} bytes of data:')
-    
+
     if interface:
         print(f"Using interface: {interface}")
 
@@ -93,6 +98,10 @@ def ping(host, count, interval, interface, ttl, packet_size, timeout, quiet, aud
             if delay is None:
                 if not quiet:
                     print(f'Ping to {display_dest} timed out')
+                if auto_traceroute:
+                    print("Performing traceroute...")
+                    traceroute(host, max_hops=10)
+                    break
             else:
                 received_packets += 1
                 delay = delay * 1000
@@ -132,13 +141,21 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--numeric', action='store_true', help='Numeric output only. No attempt to lookup symbolic names for host addresses.')
     parser.add_argument('-p', '--pattern', type=str, help='Specify up to 16 pattern bytes to fill out the packet you send.')
     parser.add_argument('-En', '--encrypt', type=str, help='Use the specified key to encrypt the payload of ICMP packets.')
-    parser.add_argument('--An', '--anonymize', action='store_true', help='Anonymize source and destination IP addresses in logs and outputs.')
+    parser.add_argument('-An', '--anonymize', action='store_true', help='Anonymize source and destination IP addresses in logs and outputs.')
+    parser.add_argument('-aTr', '--auto-traceroute', action='store_true', help='Perform a traceroute if the ping fails.')
+    parser.add_argument('-Tr', '--traceroute', action='store_true', help='Perform a traceroute on the IP.')
 
     args = parser.parse_args()
 
     if args.version:
         print(f"Ping version {VERSION}")
+    elif args.traceroute and args.host:
+        if args.anonymize:
+            traceroute(args.host, obfuscate=True)
+            sys.exit
+        else:
+            traceroute(args.host)
     elif not args.host:
         parser.print_help()
     else:
-        ping(args.host, args.count, args.interval, args.interface, args.ttl, args.packetsize, args.timeout, args.quiet, args.audible, args.timestamp, args.numeric, args.pattern.encode() if args.pattern else None, args.encrypt, args.anonymize)
+        ping(args.host, args.count, args.interval, args.interface, args.ttl, args.packetsize, args.timeout, args.quiet, args.audible, args.timestamp, args.numeric, args.pattern.encode() if args.pattern else None, args.encrypt, args.anonymize, args.auto_traceroute)
