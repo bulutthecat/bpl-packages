@@ -1,5 +1,7 @@
 # Copywright (c) 2024 Kevin Dalli
  
+import itertools
+
 def checksum(source_string):
     sum = 0
     countTo = (len(source_string) // 2) * 2
@@ -22,3 +24,9 @@ def checksum(source_string):
     answer = answer >> 8 | (answer << 8 & 0xff00)
     return answer
 
+def xor_encrypt_decrypt(data, key):
+    return bytes(a ^ b for a, b in zip(data, itertools.cycle(key.encode())))
+
+def anonymize_ip(ip):
+    parts = ip.split('.')
+    return '.'.join(['x' if i % 2 == 0 else 'y' for i in range(len(parts))])

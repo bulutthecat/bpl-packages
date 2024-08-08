@@ -1,20 +1,16 @@
 
 Functions that need to be added:
 
--c count: Stop after sending (and receiving) count ECHO_RESPONSE packets.
--i interval: Wait interval seconds between sending each packet. The default is to wait for one second between each packet.
--I interface: Specify a network interface to use for sending packets.
--t ttl: Set the IP Time to Live.
--s packetsize: Specify the number of data bytes to be sent. The default is 56, which translates to 64 ICMP data bytes when combined with the 8 bytes of ICMP header data.
--W timeout: Time to wait for a response, in seconds.
--q: Quiet output. Only the summary lines at startup time and when finished will be printed.
--a: Audible ping. Beep when a packet is received.
--V: Print version and exit.
--D: Print timestamp (unix time + microseconds as in gettimeofday) before each line.
--n: Numeric output only. No attempt will be made to lookup symbolic names for host addresses.
--p pattern: You may specify up to 16 pattern bytes to fill out the packet you send. This is useful for diagnosing data-dependent problems in a network.
-
 additional functions that could be implemented:
+
+\/ need to write logging libraries.
+
+Customizable Output Formats:
+
+    JSON/XML Output:
+        --output-format <json|xml>: Format the output as JSON or XML.
+    Custom Templates:
+        --output-template <template>: Use a custom template for the output.
 
 Detailed Statistics Logging:
 
@@ -24,6 +20,9 @@ Detailed Statistics Logging:
     Graphical Output:
         --graph-output <file>: Generate a graphical representation of the ping results and save it to the specified file.
 
+
+\/ need to write error handling libraries.
+
 Advanced Error Handling:
 
     Error Classification:
@@ -32,19 +31,7 @@ Advanced Error Handling:
         --retry <count>: Number of retry attempts for failed pings.
         --retry-interval <interval>: Interval between retry attempts.
 
-Enhanced Security and Privacy Features:
-
-    Encrypted Pings:
-        --encrypt <key>: Use the specified key to encrypt the payload of ICMP packets.
-    Anonymized Pings:
-        --anonymize: Anonymize source and destination IP addresses in logs and outputs.
-
-Customizable Output Formats:
-
-    JSON/XML Output:
-        --output-format <json|xml>: Format the output as JSON or XML.
-    Custom Templates:
-        --output-template <template>: Use a custom template for the output.
+now this, I can do!
 
 Integration with Other Network Tools:
 
@@ -79,6 +66,8 @@ Geolocation Information:
     Geolocation Lookup:
         --geolocation: Display geolocation information for the target IP address.
 
+
+\/ how about NO? this is going to be a pain to implement.
 Alerting and Notifications:
 
     Threshold-Based Alerts:
