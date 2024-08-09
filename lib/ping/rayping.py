@@ -8,7 +8,7 @@ import select
 import argparse
 import sys
 
-from check import checksum, xor_encrypt_decrypt, anonymize_ip
+from check import checksum, xor_encrypt_decrypt, anonymize_ip, whois_query
 from traceroute import traceroute
 
 ICMP_ECHO_REQUEST = 8
@@ -144,11 +144,73 @@ if __name__ == '__main__':
     parser.add_argument('-An', '--anonymize', action='store_true', help='Anonymize source and destination IP addresses in logs and outputs.')
     parser.add_argument('-aTr', '--auto-traceroute', action='store_true', help='Perform a traceroute if the ping fails.')
     parser.add_argument('-Tr', '--traceroute', action='store_true', help='Perform a traceroute on the IP.')
+    parser.add_argument('-Wh', '--whois', action='store_true', help='Perform a whois query on the IP.')
+
+    # WHOIS options
+    parser.add_argument('-Wl', '--levelonespecific', action='store_true', help='WHOIS: Find the one level less specific match.')
+    parser.add_argument('-WL', '--alllevelspecific', action='store_true', help='WHOIS: Find all levels less specific matches.')
+    parser.add_argument('-Wm', '--levelmore', action='store_true', help='WHOIS: Find all one level more specific matches.')
+    parser.add_argument('-WM', '--alllevelsmore', action='store_true', help='WHOIS: Find all levels of more specific matches.')
+    parser.add_argument('-Wc', '--smallest', action='store_true', help='WHOIS: Find the smallest match containing a mnt-irt attribute.')
+    parser.add_argument('-Wx', '--exact', action='store_true', help='WHOIS: Exact match.')
+    parser.add_argument('-Wb', '--brief', action='store_true', help='WHOIS: Return brief IP address ranges with abuse contact.')
+    parser.add_argument('-WB', '--no_filter', action='store_true', help='WHOIS: Turn off object filtering (show email addresses).')
+    parser.add_argument('-WG', '--no_grouping', action='store_true', help='WHOIS: Turn off grouping of associated objects.')
+    parser.add_argument('-Wd', '--reverse', action='store_true', help='WHOIS: Return DNS reverse delegation objects too.')
+    parser.add_argument('-Wi', '--inverse_attrs', type=str, help='WHOIS: Do an inverse look-up for specified attributes.')
+    parser.add_argument('-WT', '--types', type=str, help='WHOIS: Only look for objects of specified types.')
+    parser.add_argument('-WK', '--primary_keys', action='store_true', help='WHOIS: Only primary keys are returned.')
+    parser.add_argument('-Wr', '--no_recursive', action='store_true', help='WHOIS: Turn off recursive look-ups for contact information.')
+    parser.add_argument('-WR', '--force_local', action='store_true', help='WHOIS: Show local copy of the domain object even if it contains referral.')
+    parser.add_argument('-Wa', '--all_databases', action='store_true', help='WHOIS: Also search all the mirrored databases.')
+    parser.add_argument('-Ws', '--sources', type=str, help='WHOIS: Search the database mirrored from specified sources.')
+    parser.add_argument('-Wg', '--updates', type=str, help='WHOIS: Find updates from source from serial FIRST to LAST.')
+    parser.add_argument('-Wt', '--template_type', type=str, help='WHOIS: Request template for object of specified type.')
+    parser.add_argument('-Wv', '--verbose_type', type=str, help='WHOIS: Request verbose template for object of specified type.')
+    parser.add_argument('-Wq', '--server_info', type=str, help='WHOIS: Query specified server info.')
+
+    """
+            domain (str): The domain to query.
+        levelonespecific (bool): -Wl  Find the one level less specific match.
+        alllevelspecific (bool): -WL  Find all levels less specific matches.
+        levelmore (bool): -Wm  Find all one level more specific matches.
+        alllevelsmore (bool): -WM  Find all levels of more specific matches.
+        smallest (bool): -Wc  Find the smallest match containing a mnt-irt attribute.
+        exact (bool): -Wx  Exact match.
+        brief (bool): -Wb  Return brief IP address ranges with abuse contact.
+        no_filter (bool): -WB  Turn off object filtering (show email addresses).
+        no_grouping (bool): -WG  Turn off grouping of associated objects.
+        reverse (bool): -Wd  Return DNS reverse delegation objects too.
+        inverse_attrs (list): -Wi ATTR[,ATTR]...  Do an inverse look-up for specified attributes.
+        types (list): -WT TYPE[,TYPE]...  Only look for objects of specified types.
+        primary_keys (bool): -WK  Only primary keys are returned.
+        no_recursive (bool): -Wr  Turn off recursive look-ups for contact information.
+        force_local (bool): -WR  Show local copy of the domain object even if it contains referral.
+        all_databases (bool): -Wa  Also search all the mirrored databases.
+        sources (list): -Ws SOURCE[,SOURCE]...  Search the database mirrored from specified sources.
+        updates (str): -Wg SOURCE:FIRST-LAST  Find updates from source from serial FIRST to LAST.
+        template_type (str): -Wt TYPE  Request template for object of specified type.
+        verbose_type (str): -Wv TYPE  Request verbose template for object of specified type.
+        server_info (str): -Wq [version|sources|types]  Query specified server info.
+    """
 
     args = parser.parse_args()
+    inverse_attrs = args.inverse_attrs.split(',') if args.inverse_attrs else None
+    types = args.types.split(',') if args.types else None
+    sources = args.sources.split(',') if args.sources else None
 
     if args.version:
         print(f"Ping version {VERSION}")
+    elif args.whois:
+        
+        result = whois_query(args.host, levelonespecific=args.levelonespecific, alllevelspecific=args.alllevelspecific, 
+                          levelmore=args.levelmore, alllevelsmore=args.alllevelsmore, smallest=args.smallest, exact=args.exact, 
+                          brief=args.brief, no_filter=args.no_filter, no_grouping=args.no_grouping, reverse=args.reverse, 
+                          inverse_attrs=inverse_attrs, types=types, primary_keys=args.primary_keys, no_recursive=args.no_recursive, 
+                          force_local=args.force_local, all_databases=args.all_databases, sources=sources, updates=args.updates, 
+                          template_type=args.template_type, verbose_type=args.verbose_type, server_info=args.server_info)
+        print(result)
+
     elif args.traceroute and args.host:
         if args.anonymize:
             traceroute(args.host, obfuscate=True)
@@ -158,4 +220,9 @@ if __name__ == '__main__':
     elif not args.host:
         parser.print_help()
     else:
-        ping(args.host, args.count, args.interval, args.interface, args.ttl, args.packetsize, args.timeout, args.quiet, args.audible, args.timestamp, args.numeric, args.pattern.encode() if args.pattern else None, args.encrypt, args.anonymize, args.auto_traceroute)
+        ping(args.host, args.count, args.interval,
+                args.interface, args.ttl, args.packetsize,
+                args.timeout, args.quiet, args.audible, 
+                args.timestamp, args.numeric, 
+                args.pattern.encode() if args.pattern else None, 
+                args.encrypt, args.anonymize, args.auto_traceroute)

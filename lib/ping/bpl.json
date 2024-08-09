@@ -2,7 +2,7 @@
 	"name": "Basic Ping Library",
 	"version": "1.0.0",
 	"author": "Kevin Dalli",
-	"bin": "advping.py",
+	"bin": "rayping.py",
 	"homepage": "https:/NaN.com",
 	"requires": []
 }
