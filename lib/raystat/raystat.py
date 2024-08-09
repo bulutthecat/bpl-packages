@@ -32,7 +32,8 @@ def display_masquerade():
         for line in f:
             print(line.strip())
 
-def parse_arguments():
+def main():
+
     parser = argparse.ArgumentParser(description="Raystat, Advanced network statistics tool for Bad Package Manager")
     
     parser.add_argument('-r', '--route', action='store_true', help='display routing table')
@@ -40,7 +41,8 @@ def parse_arguments():
     parser.add_argument('-g', '--groups', action='store_true', help='display multicast group memberships')
     parser.add_argument('-s', '--statistics', action='store_true', help='display networking statistics (like SNMP)')
     parser.add_argument('-M', '--masquerade', action='store_true', help='display masqueraded connections')
-    
+
+
     # to be added
     #parser.add_argument('-v', '--verbose', action='store_true', help='be verbose')
     #parser.add_argument('-W', '--wide', action='store_true', help="don't truncate IP addresses")
@@ -60,10 +62,7 @@ def parse_arguments():
     #parser.add_argument('-C', '--cache', action='store_true', help='display routing cache instead of FIB')
     #parser.add_argument('-Z', '--context', action='store_true', help='display SELinux security context for sockets')
 
-    return parser.parse_args()
-
-def main():
-    args = parse_arguments()
+    args = parser.parse_args()
 
     if args.route:
         display_routing_table()
@@ -75,6 +74,8 @@ def main():
         display_statistics()
     if args.masquerade:
         display_masquerade()
+    if not args.route or args.interfaces or args.groups or args.statistics or args.masquerade:
+        parser.print_help()
 
 if __name__ == '__main__':
     main()
