@@ -5,6 +5,9 @@ import urllib.parse
 import socket
 import ssl
 import ftplib
+import fcntl
+import struct
+import array
 
 class HttpClient:
     def __init__(self, base_url):
@@ -106,3 +109,58 @@ class FtpClient:
 #    ftp_client.upload_file('local_file.txt', 'remote_file.txt')
 #    ftp_client.download_file('remote_file.txt', 'downloaded_file.txt')
 #    ftp_client.close()
+
+#
+# BELOW IS THE INTERFACE RETRIVAL API
+#
+
+def get_interface_info(interface):
+    # Create a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
+    # Get the interface IP address
+    ip_address = socket.inet_ntoa(fcntl.ioctl(
+        sock.fileno(),
+        0x8915,  # SIOCGIFADDR
+        struct.pack('256s', interface[:15].encode('utf-8'))
+    )[20:24])
+    
+    # Get the netmask
+    netmask = socket.inet_ntoa(fcntl.ioctl(
+        sock.fileno(),
+        0x891b,  # SIOCGIFNETMASK
+        struct.pack('256s', interface[:15].encode('utf-8'))
+    )[20:24])
+    
+    # Get the MAC address
+    mac_address = ':'.join(['%02x' % b for b in fcntl.ioctl(
+        sock.fileno(),
+        0x8927,  # SIOCGIFHWADDR
+        struct.pack('256s', interface[:15].encode('utf-8'))
+    )[18:24]])
+    
+    return {
+        'interface': interface,
+        'ip_address': ip_address,
+        'netmask': netmask,
+        'mac_address': mac_address
+    }
+
+def list_interfaces():
+    interfaces = []
+    max_possible = 128  # Arbitrary. Raise if needed.
+    bytes = max_possible * 32
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    names = array.array('B', b'\0' * bytes)
+    outbytes = struct.unpack('iL', fcntl.ioctl(
+        s.fileno(),
+        0x8912,  # SIOCGIFCONF
+        struct.pack('iL', bytes, names.buffer_info()[0])
+    ))[0]
+    namestr = names.tobytes()
+    
+    for i in range(0, outbytes, 40):
+        name = namestr[i:i+16].split(b'\0', 1)[0].decode('utf-8')
+        interfaces.append(name)
+    
+    return interfaces
