@@ -1,3 +1,5 @@
+# Copywright (c) 2024 Kevin Dalli
+ 
 import socket
 import struct
 import time

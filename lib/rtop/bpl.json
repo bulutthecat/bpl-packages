@@ -1,8 +1,8 @@
 {
-	"name": "Raynet-Utils",
-	"version": "1.2.4",
+	"name": "Raytop-Monitor",
+	"version": "1.0.0",
 	"author": "Kevin E. Dalli",
-	"bin": "rayping.py",
+	"bin": "rayfind.py",
 	"homepage": "https://github.com/bulutthecat",
 	"requires": []
 }
